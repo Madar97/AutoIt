@@ -1,0 +1,81 @@
+https://www.autoitscript.com/autoit3/docs/intro/running.htm
+
+Command Line Parameters
+Passing command line parameters to your own executable is achievable in AutoIt. Passed commandline parameters can be viewed by using the constant variables $CmdLine and $CmdLineRaw. Assigning these variables with new data will cause AutoIt to return an error, as these cannot be changed during the script's execution. Note that both variables exist whether commandline parameters are passed or not.
+
+The special array $CmdLine is initialized at the start of the script with the command line parameters passed to your AutoIt script. If running your script instead of the executable, then the ScriptName.au3 willl be ignored as a parameter.
+
+If you're passing strings with spaces, then you will need to escape these using "double quotes" in your commandline string.
+
+$CmdLine[0] ; Contains the total number of items in the array.
+$CmdLine[1] ; The first parameter.
+$CmdLine[2] ; The second parameter.
+...
+$CmdLine[nth] ; The nth parameter e.g. 10 if the array contains 10 items.
+
+
+So if you were to run your script directly using AutoIt3.exe:
+AutoIt3.exe myScript.au3 param1 "This is a string parameter" 99
+
+$CmdLine[0] ; This contains 3 parameters.
+$CmdLine[1] ; This contains param1 and not myScript.au3 as this is ignored when running non-compiled.
+$CmdLine[2] ; This contains This is a string parameter.
+$CmdLine[3] ; This contains 99.
+$CmdLineRaw ; This contains myScript.au3 param1 "This is a string parameter" 99.
+
+
+So if you were to use the compiled executable by passing commandline parameters:
+myProg.exe param1 "This is a string parameter" 99
+
+$CmdLine[0] ; This contains 3 parameters.
+$CmdLine[1] ; This contains param1.
+$CmdLine[2] ; This contains This is a string parameter.
+$CmdLine[3] ; This contains 99.
+
+
+Note: A maximum of 63 parameters can be returned by the array $CmdLine[]. If you would like to see the entire commandline string passed to an AutoIt executable, then use $CmdLineRaw for the entire parameter string.
+
+#include <Array.au3>
+#include <WinAPIShPath.au3>
+
+; An alternative to the limitation of $CmdLine[] only being able to return a maximum of 63 parameters.
+Local $aCmdLine = _WinAPI_CommandLineToArgv($CmdLineRaw)
+_ArrayDisplay($aCmdLine)
+
+AutoIt specific command Line Switches
+The AutoIt3.exe interpreter, or the interpreter stub of any compiled Autoit script, can normally be used to run AutoIt scripts directly from the command line.  In all cases the /ErrorStdOut switch allows the redirection of a fatal error to StdOut which can then be captured by an application such as the SciTE editor. This switch can be used with both the interpreter and a compiled script.
+
+Run a script using the interpreter: 
+
+AutoIt3.exe [/ErrorStdOut] [/AutoIt3ExecuteScript] filename [params ...]                 Execute the AutoIt3 script 'filename' with optional parameters
+
+At its simplest: AutoIt3.exe myScript.au3 will run a standard AutoIt script 'myScript.au3' with no parameters.
+
+Run a compiled script:
+
+Compiled.exe [/ErrorStdOut] [params ...]
+                Execute a compiled AutoIt3 Script File produced with Aut2Exe.
+
+Run a single line of code:
+
+AutoIt3.exe [/ErrorStdOut] /AutoIt3ExecuteLine "command line"
+                Execute one line of code.
+
+The command below will execute that single line of code and display the MsgBox with "Hello World!". The tray icon will not be displayed. 
+
+Run(@AutoItExe & ' /AutoIt3ExecuteLine "MsgBox(4096, ''Hello World!'', ''Hi!'')"')
+
+Run a script using another compiled script:
+
+Compiled.exe [/ErrorStdOut] /AutoIt3ExecuteScript file [params ...]
+                Execute another AutoIt script file from a compiled AutoIt3 executable. 
+
+Compiled.exe [/ErrorStdOut] /AutoIt3ExecuteLine "command line"
+                Execute one line of code as with AutoIt3.exe above. 
+
+This means that there is no need to have a copy of AutoIt3.exe in addition to the compiled file - the interpreter stub of the compiled file will replace it.  So as long as there is at least one compiled script available, other AutoIt scripts can be run without the need to have AutoIt3.exe on the machine., either pre-installed or added via FileInstall.
+
+Important Notes
+However, the executable must have been compiled with the #pragma compile(AutoItExecuteAllowed, True) directive as the default setting does not permit use of the /AutoItExecuteScript or /AutoItExecuteLine parameters. Moreover, since the interpreter stub searches for any required standard #include files in its current folder, UDF functions and various constants may not be available as those files are normally only found in the full AutoIt install. It is therefore recommended that any scripts intended to be run in this manner are compiled to the .a3x format rather then being left as plain .au3 text files
+
+Correct usage of single and double quotation marks is important when using the command line - even for double single quotation marks.
