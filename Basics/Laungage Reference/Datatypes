@@ -1,0 +1,18 @@
+https://www.autoitscript.com/autoit3/docs/intro/lang_datatypes.htm
+
+$a = 2
+ConsoleWrite($a & @CRLF)
+$b = 1.5e3
+ConsoleWrite($b & @CRLF)
+
+$c = "alma"
+$d = 'v'
+ConsoleWrite($d & $c & @CRLF)
+
+$myB = False
+ConsoleWrite($myB & @CRLF)
+
+;ptr
+
+
+
