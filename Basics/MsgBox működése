@@ -1,0 +1,7 @@
+$a = 2
+$b = "x"
+MsgBox(0,"hw",  $a & " hello " & $b )
+
+Flags and infos:
+
+https://www.autoitscript.com/autoit3/docs/functions/MsgBox.htm
