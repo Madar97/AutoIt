@@ -1,0 +1,25 @@
+https://www.autoitscript.com/autoit3/docs/intro/lang_variables.htm
+
+Local $aArray[4]
+$aArray[0] = "Jasper"
+$aArray[1] = "Beethoven"
+$aArray[2] = "Pinky"
+$aArray[3] = "Fidget"
+
+$sString = $aArray[2] ; $sString contains "Pinky"
+
+ Local $MyA[3]
+ $MyA[0] = 1
+ $MyA[1] = 2
+ $MyA[2] = 55
+ConsoleWrite("A tomb: " & @CRLF)
+For $i = 0 To UBound  ($MyA) -1
+	ConsoleWrite($myA[$i] & " ")
+Next
+
+Local $aInternal[3] = ["A", "B", "C"] ; Declare an array
+Local $aContainer[1] = [$aInternal] ; Declare a container array holding the first
+$sString = ($aContainer[0])[1] ; $sString holds "B"
+; Note the requirement to enclose the first array element definition in ( )
+
+;Maps:
