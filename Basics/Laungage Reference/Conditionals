@@ -1,0 +1,90 @@
+https://www.autoitscript.com/autoit3/docs/intro/lang_conditional.htm
+
+Language Reference - Conditional Statements
+You will often want to change the flow of your script based on a condition or series of conditions. Is one number bigger than another? Or, does a string contain a certain value?
+
+Conditions are evaluated as True (non-zero) or False (zero). Conditions generally use comparison operators like ==, <>, >=.
+
+ 
+
+The following conditional statements are available in AutoIt:
+
+If...Then...Else
+Select...Case
+Switch...Case
+Ternary
+All three statements are similar and decide which code to execute depending on the condition(s) given. Here is an example of an If statement that pops up a message box depending on the value of a variable.
+
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = -20
+
+If $iNumber > 0 Then
+    MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was positive!")
+ElseIf $iNumber < 0 Then
+    MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was negative!")
+Else
+    MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was zero.")
+EndIf
+
+ 
+
+A Select statement is very similar, but is generally used for situations where you want to test a large number of conditions as it is generally easier to read than a large If/ElseIf type block.  e.g.
+
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = 30
+
+Select
+    Case $iNumber > 1 And $iNumber <= 10
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 1")
+
+    Case $iNumber > 10 And $iNumber <= 20
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 10")
+
+    Case $iNumber > 20 And $iNumber <= 30
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 20")
+
+    Case $iNumber > 30 And $iNumber <= 40
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 30")
+
+    Case $iNumber > 40
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 40")
+EndSelect
+
+ 
+
+A Switch statement is very similar to Select statement, but is generally used for situations where the same expression is tested against some different possible values.
+
+#include <MsgBoxConstants.au3>
+
+Local $iNumber = 30
+
+Switch Int($iNumber)
+    Case 1 To 10
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 1")
+
+    Case 11 To 20
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 10")
+
+    Case 21 To 30
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 20")
+
+    Case 31 To 40
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 30")
+
+    Case Else
+        MsgBox($MB_SYSTEMMODAL, "Example", "$iNumber was greater than 40 or less or equal to 0")
+
+EndSwitch
+
+With each of these structures, the first condition that is true controls which group of statements get executed. All subsequent conditions and their associated statements get ignored.
+
+ 
+
+A Ternary statement can be used when there is a simple binary choice to be made it avoids the overhead of the structures associated with the other conditional statements.
+
+#include <MsgBoxConstants.au3>
+
+MsgBox($MB_SYSTEMMODAL, "Result: 1=1", (1 = 1) ? "True!" : "False!")
+MsgBox($MB_SYSTEMMODAL, "Result: 1=2", (1 = 2) ? "True!" : "False!")
