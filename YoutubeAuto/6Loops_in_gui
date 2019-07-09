@@ -1,0 +1,33 @@
+#include<GUIConstantsEx.au3>
+#include<WindowsConstants.au3>
+#include<EditConstants.au3>
+#include<GuiEdit.au3>
+#include<Constants.au3>
+
+GUICreate("My gui",246,218,291,134)
+$start = GUICtrlCreateButton("Start",54,183,121,23)
+$input1 = GUICtrlCreateInput(" ",14,22,131,20)
+$input2 = GUICtrlCreateInput(" ",15,87,117,20)
+$label1 = GUICtrlCreateLabel("How many reps?",16,4,100,15)
+$label2 = GUICtrlCreateLabel("Delay",16,67,100,150)
+$label3 = GUICtrlCreateLabel("How many reps done?",12,145,168,15)
+GUISetState(@SW_SHOW)
+
+While 1
+	$msg = GUIGetMsg()
+	If $msg = - 3 Then Exit
+	If $msg = $start Then start()
+WEnd
+
+Func start()
+	$read1 = GUICtrlRead($input1)
+	$read2 = GUICtrlRead($input2)
+
+	$i = 1
+
+	Do
+		GuiCtrlSetData($label3,"Reps Done = " & $i)
+		$i += 1
+		Sleep($read2)
+	Until $i = $read1 + 1
+EndFunc
